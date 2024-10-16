@@ -27,4 +27,7 @@ public class House
   [Range(0, 1000000)]
   public int Price { get; set; }
 
+  public string CreatorId { get; set; }
+  public Account Creator { get; set; }
+
 }
