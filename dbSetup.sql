@@ -107,3 +107,13 @@ VALUES (
 SELECT cars.*, accounts.*
 FROM cars
     JOIN accounts ON cars.creatorId = accounts.id;
+
+UPDATE houses
+SET
+    bathrooms = '2',
+    bedrooms = '2',
+    price = 10000,
+    description = 'Wonderfully dumb house'
+WHERE
+    id = 2
+LIMIT 1

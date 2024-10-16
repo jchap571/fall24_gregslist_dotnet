@@ -64,6 +64,45 @@ public class HousesRepository
     houseData).FirstOrDefault();
     return house;
   }
+
+  internal void DeleteHouse(int houseId)
+  {
+    string sql = "DELETE FROM houses WHERE id = @houseID LIMIT 1;";
+    int rowsAffected = _db.Execute(sql, new { houseId });
+
+    if (rowsAffected == 0)
+    {
+      throw new Exception("No houses were deleted");
+    }
+    if (rowsAffected > 1)
+    {
+      throw new Exception("more than one house was deleted");
+    }
+
+  }
+
+  internal void UpdateHouse(House house)
+  {
+    string sql = @"
+        UPDATE houses
+        SET
+        bathrooms = @Bathrooms,
+        bedrooms = @Bedrooms,
+        price = @Price,
+        description = @Description,
+        WHERE id = @Id
+        LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, house);
+    if (rowsAffected == 0)
+    {
+      throw new Exception("No houses were updated");
+    }
+    if (rowsAffected > 1)
+    {
+      throw new Exception("more than one house was updated");
+    }
+  }
 }
 
 

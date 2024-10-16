@@ -67,5 +67,42 @@ public class HousesController : ControllerBase
       return BadRequest(error.Message);
     }
   }
+
+  [Authorize]
+  [HttpDelete("{houseId}")]
+
+  public async Task<ActionResult<string>> DeleteHouse(int houseId)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      string message = _housesService.DeleteHouse(houseId, userInfo.Id);
+      return Ok(message);
+    }
+    catch (Exception error)
+    {
+
+      return BadRequest(error.Message);
+    }
+  }
+
+  [Authorize]
+  [HttpPut("{houseId}")]
+
+  public async Task<ActionResult<House>> UpdateHouse(int houseId, [FromBody] House houseUpdateData)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      House house = _housesService.UpdateHouse(houseId, userInfo.Id, houseUpdateData);
+      return Ok(house);
+    }
+    catch (Exception error)
+    {
+
+      return BadRequest(error.Message);
+    }
+  }
+
 }
 
